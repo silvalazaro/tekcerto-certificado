@@ -22,7 +22,6 @@ class TekcertoCertificado
         add_action('init', array(&$this, 'registra_categoria'), 1);
         add_action('add_meta_boxes', array(&$this, 'meta_boxes'));
         add_action('save_post', array(&$this, 'salva_meta_box'), 9, 1);
-        add_action('save_post', array(&$this, 'salva_configuracao_meta_box'), 9, 1);
     }
 
     public function scripts_admin()
@@ -35,6 +34,10 @@ class TekcertoCertificado
         wp_enqueue_script("jquery");
         wp_enqueue_script("jquery-ui-dialog");
         wp_enqueue_style("wp-jquery-ui-dialog");
+        wp_enqueue_script("tekcerto-jquery-mask", TEKCERTO_CERTIFICADO_DIR . 'lib/js/jquery.mask.min.js');
+        wp_enqueue_script("tekcerto-jquery-validate", TEKCERTO_CERTIFICADO_DIR . 'lib/js/jquery.validate.min.js');
+        wp_enqueue_script("tekcerto-iframe-api", TEKCERTO_CERTIFICADO_DIR . 'lib/js/iframe_api.js');
+        
     }
 
     public function registra_categoria()
@@ -80,16 +83,15 @@ class TekcertoCertificado
     }
 
     public function salva_meta_box($PostID)
-	{
-		require('salva_dados.php');
+    {
+        require('salva_dados.php');
     }
-    
-    
-	public function servicebox_settings_meta_box_save($PostID)
-	{
-		require('salva_configuracao.php');
-	}
 
+
+    public function servicebox_settings_meta_box_save($PostID)
+    {
+        require('salva_configuracao.php');
+    }
 }
 global $tekcerto_certificado;
 $tekcerto_certificado = TekcertoCertificado::getInstancia();
